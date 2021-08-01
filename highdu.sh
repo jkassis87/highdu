@@ -1,24 +1,27 @@
 #!/bin/bash
 
-LFHOME() { find /home/ /backup/ -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
-	}
-	
-LMAIL() { find /home/*/mail/ -type d -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
-	}
-
 LFLOG() { find /usr/local/apache/logs/ /var/lib/mysql/ /var/log/ -maxdepth 1 -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
+LFHOME() { find /home/ /backup/ -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
+	}
+	
 LDHOME() { du -Sh /home --exclude=/home/*/mail | sort -rh | head -20
 	}
 
 LSQL() { find /var/lib/mysql/ -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
+
+LMAIL() { find /home/*/mail/ -type d -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
+	}
 	
+DU_USED=$(df -h -t ext4 -t ext3 | grep -v Filesystem  | awk 'FNR == 1 {print $5}')
+
+DU_FREE=$(df -h -t ext4 -t ext3 | grep -v Filesystem  | awk 'FNR == 1 {print $4}')
 
 echo -e "Hi TYPENAMEHERE,
 
-This is a notification to alert you that the disk usage on XXXX has reached XX%.
+This is a notification to alert you that the disk usage on $HOSTNAME has reached $DU_USED with $DU_FREE remaining.
 
 Running out of disk space on a server can cause a number of issues with service reliability and should be addressed as soon as possible.
 
