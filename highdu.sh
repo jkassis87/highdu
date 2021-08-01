@@ -6,7 +6,7 @@ LFHOME() { find /home/ /backup/ -type f -size +100M -exec ls -lh {} \; | awk {'p
 LMAIL() { find /home/*/mail/ -type d -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
-LFLOG() { find /usr/local/apache/logs/ /var/lib/mysql/ /var/log/ -type f  -path /var/lib/mysql/mysql -prune -o -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
+LFLOG() { find /usr/local/apache/logs/ /var/lib/mysql/ /var/log/ -type f -path /var/lib/mysql/mysql -prune -o -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
 LDHOME() { du -Sh /home --exclude=/home/*/mail | sort -rh | head -20
@@ -15,8 +15,6 @@ LDHOME() { du -Sh /home --exclude=/home/*/mail | sort -rh | head -20
 LSQL() { find /var/lib/mysql/ -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 	
-
-
 
 echo -e "Hi TYPENAMEHERE,
 \n
@@ -41,7 +39,7 @@ Large Files Outside Home Folder"
 LFLOG
 
 echo -e "\n
-Large Files In cPanel Accounts"
+Large Files In cPanel Accounts and WHM Backups if applicable"
 
 LFHOME
 
