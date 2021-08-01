@@ -6,7 +6,7 @@ LFHOME() { find /home/ /backup/ -type f -size +100M -exec ls -lh {} \; | awk {'p
 LMAIL() { find /home/*/mail/ -type d -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
-LFLOG() { find /usr/local/apache/logs/ /var/lib/mysql/ /var/log/ -type f -maxdepth 1 -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
+LFLOG() { find /usr/local/apache/logs/ /var/lib/mysql/ /var/log/ -maxdepth 1 -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
 LDHOME() { du -Sh /home --exclude=/home/*/mail | sort -rh | head -20
