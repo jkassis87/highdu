@@ -19,6 +19,22 @@ DU_USED=$(df -h -t ext4 -t ext3 | grep -v Filesystem  | awk 'FNR == 1 {print $5}
 
 DU_FREE=$(df -h -t ext4 -t ext3 | grep -v Filesystem  | awk 'FNR == 1 {print $4}')
 
+while getopts "dc" OPTION
+do
+	case $OPTION in
+		d)
+			echo "https://support.digitalpacific.com.au/en/knowledgebase/article/using-digital-pacifics-support-pin-for-verification"
+			exit
+			;;
+		c)
+			echo "https://support.crucial.com.au/en/knowledgebase/article/using-crucials-security-pin-for-verification"
+			exit
+			;;
+	esac
+done
+
+echo " $OPTION "
+
 echo -e "Hi TYPENAMEHERE,
 
 This is a notification to alert you that the disk usage on $HOSTNAME has reached $DU_USED with $DU_FREE remaining.
@@ -71,5 +87,5 @@ It's best practice to have you or your developers remove large files that are no
 If our assistance is required for file deletion, you must provide the exact file names and include your support PIN for verification:
 "
 
-echo -e "https://support.digitalpacific.com.au/en/knowledgebase/article/using-digital-pacifics-support-pin-for-verification"
+echo $OPTION
 
