@@ -12,7 +12,7 @@ LDHOME() { du -Sh /home --exclude=/home/*/mail | sort -rh | head -20
 LSQL() { find /var/lib/mysql/ -type f -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
 	}
 
-LMAIL() { find /home/*/mail/ -type d -size +100M -exec ls -lh {} \; | awk {'print $5, $9'} | sort -h 2> /dev/null 
+LMAIL() { du -Sh -t 100M /home/*/mail/ | sort -h 
 	}
 	
 DU_USED=$(df -h -t ext4 -t ext3 | grep -v Filesystem  | awk 'FNR == 1 {print $5}')
